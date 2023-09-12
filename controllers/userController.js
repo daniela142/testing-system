@@ -52,8 +52,8 @@ const registerUser = asyncHandler(async (req, res) => {
         res.status(201).json({
             _id: user._id,
             username: user.username,
-            username: user.username,
-            username: user.username,
+            firstname: user.firstname,
+            lastname: user.lastname,
             email: user.email,
         });
     } else {
