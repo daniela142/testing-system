@@ -23,7 +23,7 @@ app.use(
 
 
 app.get("/", (req, res) => {
-    res.json({ message: "v0" });
+    res.json({ message: "v1" });
 });
 
 app.get("/api", (req, res) => {
