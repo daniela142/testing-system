@@ -4,8 +4,6 @@ const cookieParser = require('cookie-parser');
 
 const userRoutes = require("./routes/userRoutes");
 
-const User = require('./models/userModel');
-
 const app = express();
 
 // Body parser middleware
@@ -23,7 +21,7 @@ app.use(
 
 
 app.get("/", (req, res) => {
-    res.json({ message: "v3" });
+    res.json({ message: "v4" });
 });
 
 app.get("/api", (req, res) => {
