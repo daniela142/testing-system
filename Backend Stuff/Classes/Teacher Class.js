@@ -1,4 +1,8 @@
 //Teacher Class
+
+// const heyx = require("/Users/benjaminbagala/Documents/GitHub/testing-system/Backend Stuff/Engine/Elo Calculator - Ben's Simple Version.js");
+// heyx.hellWorld();
+
 class Teacher {
     constructor(email, password, firstName, lastName) {
         this.email = email;
