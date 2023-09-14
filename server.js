@@ -11,11 +11,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.enable("trust proxy")
-app.use(
-    cors({
-        credentials: true,
-    })
-);
+// app.use(
+//     cors({
+//         credentials: true,
+//     })
+// );
+app.use(cors());
 
 
 app.get("/", (req, res) => {
