@@ -15,8 +15,12 @@ const authUser = asyncHandler(async (req, res) => {
 
         res.json({
             _id: user._id,
-            name: user.name,
+            username: user.username,
+            firstname: user.firstname,
+            lastname: user.lastname,
             email: user.email,
+            isTeacher: user.isTeacher,
+            isAdmin: user.isAdmin,
         })
     } else {
         res.status(401);
@@ -84,8 +88,12 @@ const getUserProfile = asyncHandler(async (req, res) => {
     if (user) {
         res.json({
             _id: user._id,
-            name: user.name,
+            username: user.username,
+            firstname: user.firstname,
+            lastname: user.lastname,
             email: user.email,
+            isTeacher: user.isTeacher,
+            isAdmin: user.isAdmin,
         });
     } else {
         res.status(404);
@@ -100,15 +108,26 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     const user = await User.findById(req.user._id);
 
     if (user) {
-        user.name = req.body.name || user.name;
+        user.username = req.body.username || user.username;
+        user.firstname = req.body.firstname || user.firstname;
+        user.lastname = req.body.lastname || user.lastname;
         user.email = req.body.email || user.email;
+
+        if (req.body.password) {
+            user.password = req.body.password;
+        }
 
         const updatedUser = await user.save();
 
         res.json({
             _id: updatedUser._id,
-            name: updatedUser.name,
-            email: updatedUser.email,
+            _id: user._id,
+            username: user.username,
+            firstname: user.firstname,
+            lastname: user.lastname,
+            email: user.email,
+            isTeacher: user.isTeacher,
+            isAdmin: user.isAdmin,
         });
     } else {
         res.status(404);
@@ -160,7 +179,9 @@ const updateUser = asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
 
     if (user) {
-        user.name = req.body.name || user.name;
+        user.username = req.body.username || user.username;
+        user.firstname = req.body.firstname || user.firstname;
+        user.lastname = req.body.lastname || user.lastname;
         user.email = req.body.email || user.email;
 
         if (req.body.password) {
@@ -171,8 +192,13 @@ const updateUser = asyncHandler(async (req, res) => {
 
         res.json({
             _id: updatedUser._id,
-            name: updatedUser.name,
-            email: updatedUser.email,
+            _id: user._id,
+            username: user.username,
+            firstname: user.firstname,
+            lastname: user.lastname,
+            email: user.email,
+            isTeacher: user.isTeacher,
+            isAdmin: user.isAdmin,
         });
     } else {
         res.status(404);
