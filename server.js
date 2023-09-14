@@ -13,15 +13,13 @@ app.use(cookieParser());
 app.enable("trust proxy")
 app.use(
     cors({
-        origin: true,
         credentials: true,
-        exposedHeaders: ["jwt", "set-cookie", "Set-Cookie"],
     })
 );
 
 
 app.get("/", (req, res) => {
-    res.json({ message: "v4" });
+    res.json({ message: "v5" });
 });
 
 app.get("/api", (req, res) => {
