@@ -31,6 +31,18 @@ const UserSchema = new mongoose.Schema({
         required: [true, "Please provide a password!"],
         unique: false,
     },
+
+    isTeacher: {
+        type: Boolean,
+        default: false,
+        required: false,
+    },
+
+    isAdmin: {
+        type: Boolean,
+        default: false,
+        required: false,
+    },
 })
 
 // Match user entered password to hashed password in database
