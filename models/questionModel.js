@@ -6,7 +6,7 @@ const QuestionSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please provide a test name!"],
     },
-
+    
     imageUrl: {
         type: String,
         required: false,
@@ -22,9 +22,10 @@ const QuestionSchema = new mongoose.Schema({
         required: [true, "Please provide a question answer"],
     },
 
-    questionElo: {
-        // min is 0, max is 1000, 
+    elo: {
         type: Number,
+        min: 0,
+        max: 1000,
         required: [true, "Please provide an elo"],
     }
 })

@@ -6,7 +6,7 @@ const TestSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please provide a test name!"],
     },
-
+    
     description: {
         type: String,
         required: false,
@@ -18,11 +18,13 @@ const TestSchema = new mongoose.Schema({
     },
 
     startDate: {
-        //  to do
+        type: Date,
+        required: true,
     },
 
     endDate: {
-        // to do
+        type: Date,
+        required: true,
     },
 
     question_ids: {

@@ -28,8 +28,9 @@ const UserSchema = new mongoose.Schema({
 
     elo: {
         type: Number,
-        default: 0,
-        required: true,
+        default: 500,
+        min: 0,
+        max: 1000,
     },
     
     isTeacher: {

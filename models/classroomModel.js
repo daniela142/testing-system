@@ -7,6 +7,11 @@ const ClassroomSchema = new mongoose.Schema({
         required: [true, "Please provide a class name!"],
     },
 
+    code: {
+        type: String,
+        required: [true, "Please provide a class code!"],
+    },
+
     description: {
         type: String,
         required: false,
