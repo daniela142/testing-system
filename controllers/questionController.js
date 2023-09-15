@@ -58,7 +58,7 @@ const getQuestion = asyncHandler(async (req, res) => {
 // @route GET /api/questions
 // @access Private/Admin
 const getQuestions = asyncHandler(async (req, res) => {
-    const questions = await Questions.find({});
+    const questions = await Question.find({});
     res.json(questions);
 })
 
