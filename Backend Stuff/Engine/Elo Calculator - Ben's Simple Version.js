@@ -1,5 +1,4 @@
 //Elo Calculator
-
 //constants
 const baseConstant = 10;
 const streakConstant = 0.25
@@ -46,3 +45,8 @@ console.log("questionsAnsweredMultipler AFTER = " + questionsAnsweredMultiplier)
 console.log("streakMultiplier AFTER = " + streakMultiplier);
 console.log("volatility AFTER = " + volatility);
 console.log("userElo AFTER = " + userElo);
+
+// function hellWorld () {
+//     console.log("hello world");
+// }
+// module.exports = {hellWorld};
