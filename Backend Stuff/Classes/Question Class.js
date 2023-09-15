@@ -1,10 +1,11 @@
 class Question{
-    constructor(question, questionType, answers, correctAnswer, rank){
+    constructor(question, questionType, answers, correctAnswer, rank, imgAddress){
         this.question = question;
         this.questionType = questionType;
         this.answers = answers;
         this.correctAnswer = correctAnswer;
         this.rank = rank;
+        this.imgAddress = imgAddress;
     }
 
     getQuestion(){
