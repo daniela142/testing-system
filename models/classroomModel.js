@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const bcrypt = require('bcryptjs');
 
+const User = require('../models/userModel');
+
 const ClassroomSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -18,8 +20,9 @@ const ClassroomSchema = new mongoose.Schema({
     },
 
     coordinator: {
-        type: String,
-        required: [true, "Please provide a first name!"],
+        type: User,
+        //required: [true, "Please provide a user!"],
+        required: false,
     },
 
     student_ids: {
