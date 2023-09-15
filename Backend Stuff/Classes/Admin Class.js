@@ -1,10 +1,11 @@
 //Admin Class
 class Admin {
-    constructor(email, password, firstName, lastName) {
+    constructor(email, password, firstName, lastName, classroomObjectArray) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.classroomObjectArray = classroomObjectArray;
     }
 
     getAdminEmail() {
@@ -20,3 +21,4 @@ class Admin {
         return this.lastName;
     }
 }
+
