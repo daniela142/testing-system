@@ -8,14 +8,13 @@ const User = require('../models/userModel');
 const authUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email })
 
     if (user && (await user.matchPassword(password))) {
         generateToken(res, user._id);
 
         res.json({
             _id: user._id,
-            username: user.username,
             firstname: user.firstname,
             lastname: user.lastname,
             email: user.email,
@@ -33,7 +32,7 @@ const authUser = asyncHandler(async (req, res) => {
 // @route POST /api/users
 // @access Public
 const registerUser = asyncHandler(async (req, res) => {
-    const { username, firstname, lastname, email, password } = req.body;
+    const { firstname, lastname, email, password } = req.body;
 
     const userExists = await User.findOne({ email });
 
@@ -43,7 +42,6 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 
     const user = await User.create({
-        username,
         firstname,
         lastname,
         email,
@@ -55,7 +53,6 @@ const registerUser = asyncHandler(async (req, res) => {
     if (user) {
         res.status(201).json({
             _id: user._id,
-            username: user.username,
             firstname: user.firstname,
             lastname: user.lastname,
             email: user.email,
@@ -88,7 +85,6 @@ const getUserProfile = asyncHandler(async (req, res) => {
     if (user) {
         res.json({
             _id: user._id,
-            username: user.username,
             firstname: user.firstname,
             lastname: user.lastname,
             email: user.email,
@@ -108,7 +104,6 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     const user = await User.findById(req.user._id);
 
     if (user) {
-        user.username = req.body.username || user.username;
         user.firstname = req.body.firstname || user.firstname;
         user.lastname = req.body.lastname || user.lastname;
         user.email = req.body.email || user.email;
@@ -122,7 +117,6 @@ const updateUserProfile = asyncHandler(async (req, res) => {
         res.json({
             _id: updatedUser._id,
             _id: user._id,
-            username: user.username,
             firstname: user.firstname,
             lastname: user.lastname,
             email: user.email,
@@ -179,7 +173,6 @@ const updateUser = asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
 
     if (user) {
-        user.username = req.body.username || user.username;
         user.firstname = req.body.firstname || user.firstname;
         user.lastname = req.body.lastname || user.lastname;
         user.email = req.body.email || user.email;
@@ -193,7 +186,6 @@ const updateUser = asyncHandler(async (req, res) => {
         res.json({
             _id: updatedUser._id,
             _id: user._id,
-            username: user.username,
             firstname: user.firstname,
             lastname: user.lastname,
             email: user.email,
@@ -205,6 +197,9 @@ const updateUser = asyncHandler(async (req, res) => {
         throw new Error('User not found');
     }
 });
+
+/// updateEloRating
+
 
 module.exports = {
     authUser,

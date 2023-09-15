@@ -2,12 +2,6 @@ const mongoose = require("mongoose");
 const bcrypt = require('bcryptjs');
 
 const UserSchema = new mongoose.Schema({
-    username: {
-        type: String,
-        required: [true, "Please provide a last name!"],
-        unique: false,
-    },
-
     firstname: {
         type: String,
         required: [true, "Please provide a first name!"],
@@ -32,6 +26,12 @@ const UserSchema = new mongoose.Schema({
         unique: false,
     },
 
+    elo: {
+        type: Number,
+        default: 0,
+        required: true,
+    },
+    
     isTeacher: {
         type: Boolean,
         default: false,
