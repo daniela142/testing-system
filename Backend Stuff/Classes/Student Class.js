@@ -7,7 +7,7 @@ class Student {
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.elo = startingElo;
+        this.studentElo = startingElo;
     }
 
     updateElo() {
@@ -26,10 +26,12 @@ class Student {
     getLastName() {
         return this.lastName;
     }
-    getElo() {
-        return this.elo;
+    getStudentElo() {
+        return this.studentElo;
     }
 }
 
-// const astudent = new Student("a", "b", "c", "d", 200);
+
+// const ben = new Student("a", "b", "c", "d", 200);
+// const dan = new Student("X", "Y", "C", "d", 200);
 // console.log(astudent.getElo());
