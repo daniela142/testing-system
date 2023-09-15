@@ -15,14 +15,16 @@ router.route('/').post(createClassroom).get(protect, teacher, getClassrooms);
 
 router
     .route('/info')
-    .get(protect, getClassroom)
-    .put(protect, updateClassroom);
+    .get(getClassroom)
+    .put(updateClassroom);
 
 router
     .route('/:classroomId')
-    .delete(protect, teacher, deleteClassroom)
-    .get(protect, getClassroomById)
-    .put(protect, updateClassroom);
+    .delete(deleteClassroom)
+    .get(getClassroomById)
+    .put(updateClassroom);
+    // .get(protect, getClassroomById)
+    // .put(protect, updateClassroom);
 
 
 module.exports = router;

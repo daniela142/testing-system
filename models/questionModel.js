@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const QuestionSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: [true, "Please provide a test name!"],
+        required: [true, "Please provide a question name!"],
     },
     
     imageUrl: {

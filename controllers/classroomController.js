@@ -46,18 +46,11 @@ const createClassroom = asyncHandler(async (req, res) => {
 // @route GET /api/classrooms/info
 // @access Private
 const getClassroom = asyncHandler(async (req, res) => {
-    const classroom = await Classroom.findById(req.classroom._id);
-
+    //const classroom = await Classroom.find({});
+    const classroom = await Classroom.findById(req.user._id);
+    
     if (classroom) {
-        res.json({
-            _id: classroom._id,
-            name: classroom.name,
-            code: classroom.code,
-            description: classroom.description,
-            coordinator: classroom.coordinator,
-            student_ids: classroom.student_ids,
-            test_ids: classroom.test_ids,
-        });
+        res.send(classroom);
     } else {
         res.status(404);
         throw new Error('Classroom not found');
@@ -66,7 +59,7 @@ const getClassroom = asyncHandler(async (req, res) => {
 
 // @desc Get all classrooms
 // @route GET /api/classrooms
-// @access Private/Admin
+// @access Private/Teacher
 const getClassrooms = asyncHandler(async (req, res) => {
     const classrooms = await Classroom.find({});
     res.json(classrooms);
@@ -74,9 +67,9 @@ const getClassrooms = asyncHandler(async (req, res) => {
 
 // @desc Delete classroom
 // @route DELETE /api/classrooms/:id
-// access Private/Admin
+// access Private/Teacher
 const deleteClassroom = asyncHandler(async (req, res) => {
-    const classroom = await Classroom.findById(req.params.id);
+    const classroom = await Classroom.findById(req.params.classroomId);
 
     if (classroom) {
         await Classroom.deleteOne({ _id: classroom._id });
@@ -91,7 +84,7 @@ const deleteClassroom = asyncHandler(async (req, res) => {
 // @route GET /api/classrooms/:id
 // @access Private/Admin
 const getClassroomById = asyncHandler(async (req, res) => {
-    const classroom = await Classroom.findById(req.params.id);
+    const classroom = await Classroom.findById(req.params.classroomId);
 
     if (classroom) {
         res.json(classroom);
@@ -105,7 +98,7 @@ const getClassroomById = asyncHandler(async (req, res) => {
 // @route   PUT /api/classrooms/:id
 // @access  Private
 const updateClassroom = asyncHandler(async (req, res) => {
-    const classroom = await Classroom.findById(req.params.id);
+    const classroom = await Classroom.findById(req.params.classroomId);
 
     if (classroom) {
         classroom.name = req.body.name || classroom.name;

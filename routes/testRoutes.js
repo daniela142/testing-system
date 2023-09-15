@@ -11,7 +11,7 @@ const { protect, teacher, admin } = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
-router.route('/').post(createTest).get(protect, teacher, getTests);
+router.route('/').post(createTest).get(protect, getTests);
 
 router
     .route('/info')
@@ -20,7 +20,7 @@ router
 
 router
     .route('/:testId')
-    .delete(protect, teacher, deleteTest)
+    .delete(protect, deleteTest)
     .get(protect, getTestById)
     .put(protect, updateTest);
 

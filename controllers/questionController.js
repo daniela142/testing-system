@@ -19,12 +19,12 @@ const createQuestion = asyncHandler(async (req, res) => {
 
     if (question) {
         res.status(201).json({
-            _id: test._id,
-            name: test.name,
-            imageUrl: test.imageUrl,
-            type: test.type,
-            answers: test.answers,
-            elo: test.elo,
+            _id: question._id,
+            name: question.name,
+            imageUrl: question.imageUrl,
+            type: question.type,
+            answers: question.answers,
+            elo: question.elo,
         });
     } else {
         res.status(400);
@@ -41,12 +41,12 @@ const getQuestion = asyncHandler(async (req, res) => {
 
     if (question) {
         res.json({
-            _id: test._id,
-            name: test.name,
-            imageUrl: test.imageUrl,
-            type: test.type,
-            answers: test.answers,
-            elo: test.elo,
+            _id: question._id,
+            name: question.name,
+            imageUrl: question.imageUrl,
+            type: question.type,
+            answers: question.answers,
+            elo: question.elo,
         });
     } else {
         res.status(404);
@@ -66,7 +66,7 @@ const getQuestions = asyncHandler(async (req, res) => {
 // @route DELETE /api/questions/:id
 // access Private/Admin
 const deleteQuestion = asyncHandler(async (req, res) => {
-    const question = await Question.findById(req.params.id);
+    const question = await Question.findById(req.params.questionId);
 
     if (question) {
         await Question.deleteOne({ _id: question._id });
@@ -81,7 +81,7 @@ const deleteQuestion = asyncHandler(async (req, res) => {
 // @route GET /api/questions/:id
 // @access Private/Admin
 const getQuestionById = asyncHandler(async (req, res) => {
-    const question = await Question.findById(req.params.id);
+    const question = await Question.findById(req.params.questionId);
 
     if (question) {
         res.json(question);
@@ -95,9 +95,9 @@ const getQuestionById = asyncHandler(async (req, res) => {
 // @route   PUT /api/questions/:id
 // @access  Private
 const updateQuestion = asyncHandler(async (req, res) => {
-    const question = await Question.findById(req.params.id);
+    const question = await Question.findById(req.params.questionId);
 
-    if (test) {
+    if (question) {
         question.name = req.body.name || question.name;
         question.imageUrl = req.body.imageUrl || question.imageUrl;
         question.type = req.body.type || question.type;
@@ -105,7 +105,7 @@ const updateQuestion = asyncHandler(async (req, res) => {
         question.elo = req.body.elo || question.elo;
 
 
-        const updatedQuestion = await test.save();
+        const updatedQuestion = await question.save();
 
         res.json({
             _id: updatedQuestion._id,

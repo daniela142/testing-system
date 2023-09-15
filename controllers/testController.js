@@ -68,15 +68,15 @@ const getTest = asyncHandler(async (req, res) => {
 // @route GET /api/tests
 // @access Private/Admin
 const getTests = asyncHandler(async (req, res) => {
-    const tests = await Tests.find({});
-    res.json(test);
+    const tests = await Test.find({});
+    res.json(tests);
 })
 
 // @desc Delete test
 // @route DELETE /api/tests/:id
 // access Private/Admin
 const deleteTest = asyncHandler(async (req, res) => {
-    const test = await Test.findById(req.params.id);
+    const test = await Test.findById(req.params.testId);
 
     if (test) {
         await Test.deleteOne({ _id: test._id });
@@ -91,7 +91,7 @@ const deleteTest = asyncHandler(async (req, res) => {
 // @route GET /api/tests/:id
 // @access Private/Admin
 const getTestById = asyncHandler(async (req, res) => {
-    const test = await Test.findById(req.params.id);
+    const test = await Test.findById(req.params.testId);
 
     if (test) {
         res.json(test);
@@ -105,7 +105,7 @@ const getTestById = asyncHandler(async (req, res) => {
 // @route   PUT /api/tests/:id
 // @access  Private
 const updateTest = asyncHandler(async (req, res) => {
-    const test = await Test.findById(req.params.id);
+    const test = await Test.findById(req.params.testId);
 
     if (test) {
         test.name = req.body.name || test.name;

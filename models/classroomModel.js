@@ -19,9 +19,9 @@ const ClassroomSchema = new mongoose.Schema({
         required: false,
     },
 
-    coordinator: {
-        type: User,
-        //required: [true, "Please provide a user!"],
+    coordinator_id: {
+        type: String,
+        required: [true, "Please provide a user id!"],
         required: false,
     },
 
