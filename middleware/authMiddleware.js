@@ -26,8 +26,7 @@ const protect = asyncHandler(async (req, res, next) => {
 
 // User must be teacher
 const teacher = (req, res, next) => {
-    console.log("asdas");
-    console.log(req.user);
+    // console.log(req.user);
     if (req.user && req.user.isTeacher) {
         next();
     } else {

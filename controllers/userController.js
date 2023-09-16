@@ -113,6 +113,9 @@ const updateUserProfile = asyncHandler(async (req, res) => {
         user.firstname = req.body.firstname || user.firstname;
         user.lastname = req.body.lastname || user.lastname;
         user.email = req.body.email || user.email;
+        user.elo = req.body.elo || user.elo;
+        user.isTeacher = req.body.isTeacher || user.isTeacher;
+        user.isAdmin = req.body.isAdmin || user.isAdmin;
 
         if (req.body.password) {
             user.password = req.body.password;
@@ -122,12 +125,12 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
         res.json({
             _id: updatedUser._id,
-            _id: user._id,
-            firstname: user.firstname,
-            lastname: user.lastname,
-            email: user.email,
-            isTeacher: user.isTeacher,
-            isAdmin: user.isAdmin,
+            firstname: updatedUser.firstname,
+            lastname: updatedUser.lastname,
+            email: updatedUser.email,
+            elo: updatedUser.elo,
+            isTeacher: updatedUser.isTeacher,
+            isAdmin: updatedUser.isAdmin,
         });
     } else {
         res.status(404);
@@ -182,6 +185,10 @@ const updateUser = asyncHandler(async (req, res) => {
         user.firstname = req.body.firstname || user.firstname;
         user.lastname = req.body.lastname || user.lastname;
         user.email = req.body.email || user.email;
+        user.elo = req.body.elo || user.elo;
+        user.isTeacher = req.body.isTeacher || user.isTeacher;
+        isAdmin = req.body.isAdmin || user.isAdmin;
+
 
         if (req.body.password) {
             user.password = req.body.password;
@@ -191,12 +198,12 @@ const updateUser = asyncHandler(async (req, res) => {
 
         res.json({
             _id: updatedUser._id,
-            _id: user._id,
-            firstname: user.firstname,
-            lastname: user.lastname,
-            email: user.email,
-            isTeacher: user.isTeacher,
-            isAdmin: user.isAdmin,
+            firstname: updatedUser.firstname,
+            lastname: updatedUser.lastname,
+            email: updatedUser.email,
+            elo: updatedUser.elo,
+            isTeacher: updatedUser.isTeacher,
+            isAdmin: updatedUser.isAdmin,
         });
     } else {
         res.status(404);
