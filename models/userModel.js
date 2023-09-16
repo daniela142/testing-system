@@ -36,13 +36,13 @@ const UserSchema = new mongoose.Schema({
     isTeacher: {
         type: Boolean,
         default: false,
-        required: false,
+        required: [true, "Please choose an account type! (teacher)"],
     },
 
     isAdmin: {
         type: Boolean,
         default: false,
-        required: false,
+        required: [true, "Please choose an account type! (admin)"],
     },
 })
 
