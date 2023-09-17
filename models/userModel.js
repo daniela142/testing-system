@@ -33,17 +33,11 @@ const UserSchema = new mongoose.Schema({
         max: 1000,
     },
     
-    isTeacher: {
-        type: Boolean,
-        default: false,
-        required: [true, "Please choose an account type! (teacher)"],
-    },
-
-    isAdmin: {
-        type: Boolean,
-        default: false,
-        required: [true, "Please choose an account type! (admin)"],
-    },
+    usertype: {
+        type: String,
+        default: "student",
+        required: [true, "Please choose an account type!"],
+    }
 })
 
 // Match user entered password to hashed password in database

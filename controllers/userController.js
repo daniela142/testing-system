@@ -18,8 +18,7 @@ const authUser = asyncHandler(async (req, res) => {
             firstname: user.firstname,
             lastname: user.lastname,
             email: user.email,
-            isTeacher: user.isTeacher,
-            isAdmin: user.isAdmin,
+            usertype: user.usertype
         })
     } else {
         res.status(401);
@@ -32,7 +31,7 @@ const authUser = asyncHandler(async (req, res) => {
 // @route POST /api/users
 // @access Public
 const registerUser = asyncHandler(async (req, res) => {
-    const { firstname, lastname, email, password, isTeacher, isAdmin } = req.body;
+    const { firstname, lastname, email, password, usertype } = req.body;
 
     const userExists = await User.findOne({ email });
 
@@ -46,8 +45,7 @@ const registerUser = asyncHandler(async (req, res) => {
         lastname,
         email,
         password,
-        isTeacher,
-        isAdmin
+        usertype
     });
 
     user.save();
@@ -60,8 +58,7 @@ const registerUser = asyncHandler(async (req, res) => {
             firstname: user.firstname,
             lastname: user.lastname,
             email: user.email,
-            isTeacher: user.isTeacher,
-            isAdmin: user.isAdmin
+            usertype: user.usertype
         });
     } else {
         res.status(400);
@@ -94,8 +91,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
             firstname: user.firstname,
             lastname: user.lastname,
             email: user.email,
-            isTeacher: user.isTeacher,
-            isAdmin: user.isAdmin,
+            usertype: user.usertype
         });
     } else {
         res.status(404);
@@ -114,8 +110,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
         user.lastname = req.body.lastname || user.lastname;
         user.email = req.body.email || user.email;
         user.elo = req.body.elo || user.elo;
-        user.isTeacher = req.body.isTeacher || user.isTeacher;
-        user.isAdmin = req.body.isAdmin || user.isAdmin;
+        user.usertype = req.body.usertype || user.usertype;
 
         if (req.body.password) {
             user.password = req.body.password;
@@ -129,8 +124,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
             lastname: updatedUser.lastname,
             email: updatedUser.email,
             elo: updatedUser.elo,
-            isTeacher: updatedUser.isTeacher,
-            isAdmin: updatedUser.isAdmin,
+            usertype: updatedUser.usertype
         });
     } else {
         res.status(404);
@@ -186,8 +180,7 @@ const updateUser = asyncHandler(async (req, res) => {
         user.lastname = req.body.lastname || user.lastname;
         user.email = req.body.email || user.email;
         user.elo = req.body.elo || user.elo;
-        user.isTeacher = req.body.isTeacher || user.isTeacher;
-        isAdmin = req.body.isAdmin || user.isAdmin;
+        user.usertype = req.body.usertype || user.usertype;
 
 
         if (req.body.password) {
@@ -202,8 +195,7 @@ const updateUser = asyncHandler(async (req, res) => {
             lastname: updatedUser.lastname,
             email: updatedUser.email,
             elo: updatedUser.elo,
-            isTeacher: updatedUser.isTeacher,
-            isAdmin: updatedUser.isAdmin,
+            user: updateUser.usertype
         });
     } else {
         res.status(404);
