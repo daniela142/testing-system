@@ -32,4 +32,7 @@ class Test{
         return this.dueDate;
     }
 
+    addQuestion(name, type, answers, correct, rank, imgaddress){
+        this.questions[questions.length] = new Question(name, type, answers, correct, rank, imgaddress)
+    }
 }
