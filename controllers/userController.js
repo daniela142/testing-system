@@ -8,19 +8,17 @@ const User = require('../models/userModel');
 const authUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email })
 
     if (user && (await user.matchPassword(password))) {
         generateToken(res, user._id);
 
         res.json({
             _id: user._id,
-            username: user.username,
             firstname: user.firstname,
             lastname: user.lastname,
             email: user.email,
-            isTeacher: user.isTeacher,
-            isAdmin: user.isAdmin,
+            usertype: user.usertype
         })
     } else {
         res.status(401);
@@ -33,7 +31,7 @@ const authUser = asyncHandler(async (req, res) => {
 // @route POST /api/users
 // @access Public
 const registerUser = asyncHandler(async (req, res) => {
-    const { username, firstname, lastname, email, password } = req.body;
+    const { firstname, lastname, email, password, usertype } = req.body;
 
     const userExists = await User.findOne({ email });
 
@@ -43,22 +41,24 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 
     const user = await User.create({
-        username,
         firstname,
         lastname,
         email,
         password,
+        usertype
     });
 
     user.save();
 
     if (user) {
+        generateToken(res, user._id);
+
         res.status(201).json({
             _id: user._id,
-            username: user.username,
             firstname: user.firstname,
             lastname: user.lastname,
             email: user.email,
+            usertype: user.usertype
         });
     } else {
         res.status(400);
@@ -88,12 +88,10 @@ const getUserProfile = asyncHandler(async (req, res) => {
     if (user) {
         res.json({
             _id: user._id,
-            username: user.username,
             firstname: user.firstname,
             lastname: user.lastname,
             email: user.email,
-            isTeacher: user.isTeacher,
-            isAdmin: user.isAdmin,
+            usertype: user.usertype
         });
     } else {
         res.status(404);
@@ -108,10 +106,11 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     const user = await User.findById(req.user._id);
 
     if (user) {
-        user.username = req.body.username || user.username;
         user.firstname = req.body.firstname || user.firstname;
         user.lastname = req.body.lastname || user.lastname;
         user.email = req.body.email || user.email;
+        user.elo = req.body.elo || user.elo;
+        user.usertype = req.body.usertype || user.usertype;
 
         if (req.body.password) {
             user.password = req.body.password;
@@ -121,13 +120,11 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
         res.json({
             _id: updatedUser._id,
-            _id: user._id,
-            username: user.username,
-            firstname: user.firstname,
-            lastname: user.lastname,
-            email: user.email,
-            isTeacher: user.isTeacher,
-            isAdmin: user.isAdmin,
+            firstname: updatedUser.firstname,
+            lastname: updatedUser.lastname,
+            email: updatedUser.email,
+            elo: updatedUser.elo,
+            usertype: updatedUser.usertype
         });
     } else {
         res.status(404);
@@ -179,10 +176,12 @@ const updateUser = asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
 
     if (user) {
-        user.username = req.body.username || user.username;
         user.firstname = req.body.firstname || user.firstname;
         user.lastname = req.body.lastname || user.lastname;
         user.email = req.body.email || user.email;
+        user.elo = req.body.elo || user.elo;
+        user.usertype = req.body.usertype || user.usertype;
+
 
         if (req.body.password) {
             user.password = req.body.password;
@@ -192,19 +191,20 @@ const updateUser = asyncHandler(async (req, res) => {
 
         res.json({
             _id: updatedUser._id,
-            _id: user._id,
-            username: user.username,
-            firstname: user.firstname,
-            lastname: user.lastname,
-            email: user.email,
-            isTeacher: user.isTeacher,
-            isAdmin: user.isAdmin,
+            firstname: updatedUser.firstname,
+            lastname: updatedUser.lastname,
+            email: updatedUser.email,
+            elo: updatedUser.elo,
+            user: updateUser.usertype
         });
     } else {
         res.status(404);
         throw new Error('User not found');
     }
 });
+
+/// updateEloRating
+
 
 module.exports = {
     authUser,

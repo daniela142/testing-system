@@ -24,10 +24,21 @@ const protect = asyncHandler(async (req, res, next) => {
     }
 });
 
+// User must be teacher
+const teacher = (req, res, next) => {
+    // console.log(req.user);
+    if (req.user && req.user.usertype == "teacher") {
+        next();
+    } else {
+        res.status(401);
+        throw new Error('Not authorized as a teacher');
+    }
+}
+
 // User must be admin
 const admin = (req, res, next) => {
     // console.log(req.user);
-    if (req.user && req.user.isAdmin) {
+    if (req.user && req.user.usertype == "admin") {
         next();
     } else {
         res.status(401);
@@ -35,4 +46,4 @@ const admin = (req, res, next) => {
     }
 }
 
-module.exports = { protect, admin };
+module.exports = { protect, teacher, admin };

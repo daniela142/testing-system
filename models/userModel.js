@@ -2,12 +2,6 @@ const mongoose = require("mongoose");
 const bcrypt = require('bcryptjs');
 
 const UserSchema = new mongoose.Schema({
-    username: {
-        type: String,
-        required: [true, "Please provide a last name!"],
-        unique: false,
-    },
-
     firstname: {
         type: String,
         required: [true, "Please provide a first name!"],
@@ -32,17 +26,18 @@ const UserSchema = new mongoose.Schema({
         unique: false,
     },
 
-    isTeacher: {
-        type: Boolean,
-        default: false,
-        required: false,
+    elo: {
+        type: Number,
+        default: 500,
+        min: 0,
+        max: 1000,
     },
-
-    isAdmin: {
-        type: Boolean,
-        default: false,
-        required: false,
-    },
+    
+    usertype: {
+        type: String,
+        default: "student",
+        required: [true, "Please choose an account type!"],
+    }
 })
 
 // Match user entered password to hashed password in database
