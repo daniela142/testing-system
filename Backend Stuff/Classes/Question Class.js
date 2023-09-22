@@ -9,7 +9,7 @@ class Question{
         //the correct answer to look for
         this.correctAnswer = correctAnswer;
         //the hidden elo rank of this question
-        this.rank = rank;
+        this.rank = setRealRank(rank);
         this.imgAddress = imgAddress;
     }
 
@@ -27,5 +27,16 @@ class Question{
 
     getRank(){
         return this.rank;
+    }
+
+    setRealRank(rank){
+        if(rank <= 10 && rank > 0){
+            rank -= 1;
+            rank * 100;
+            return rank;
+        }
+        else{
+            console.log("Invalid Ranking")
+        }
     }
 }
