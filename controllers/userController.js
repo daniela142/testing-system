@@ -2,6 +2,8 @@ const asyncHandler = require('../middleware/asyncHandler');
 const generateToken = require('../utils/generateToken');
 const User = require('../models/userModel');
 
+const eloCalculator = require('../services/eloCalculator');
+
 // @desc Auth user & get token
 // @route POST /api/users/auth
 // @access public
@@ -203,7 +205,25 @@ const updateUser = asyncHandler(async (req, res) => {
     }
 });
 
-/// updateEloRating
+// @desc    Update user elo rating
+// @route   PUT /api/users/????
+// @access  Private
+const updateEloRating = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);
+    const question = req.body.question;
+    const answeredCorrect = req.body.answeredCorrect;
+
+    if (user && question && answeredCorrect) {
+        let updatedElo = eloCalculator.updateElo(user.elo, question.elo, answeredCorrect);
+
+        res.json({
+            elo: updatedElo
+        })
+    } else {
+        res.status(404);
+        throw new Error('User not found');
+    }
+});
 
 
 module.exports = {
@@ -216,4 +236,5 @@ module.exports = {
     deleteUser,
     getUserById,
     updateUser,
+    updateEloRating,
 }
