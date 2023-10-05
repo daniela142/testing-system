@@ -24,7 +24,9 @@ Body: {
     firstname: test,
     lastname: test,
     email: test@test.com,
-    password: 123
+    password: 123,
+    // usertype has 3 option: student, teacher, admin
+    usertype: teacher,
 }
 
 
