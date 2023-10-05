@@ -57,4 +57,12 @@ Body: {
     answer: "test",
     elo: 123,
 }
+
+Get all questions
+GET /api/questions
+Body: {}
+
+Get single question
+GET /api/questions/id // replace id with question id
+Body: {}
 ```
