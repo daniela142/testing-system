@@ -47,4 +47,14 @@ Response: {
     "message": "Logged out successfully"
 }
 
+
+Create a new question
+POST /api/questions
+Body: {
+    name: test,
+    imageUrl: , // can be null or excluded
+    type: MultipleChoice, // 3 types: ["MultipleChoice", "ShortAnswer", "CheckBoxes"]
+    answer: "test",
+    elo: 123,
+}
 ```
