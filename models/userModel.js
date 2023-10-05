@@ -37,6 +37,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         default: "student",
         required: [true, "Please choose an account type!"],
+        enum: ["student", "teacher", "admin"]
     }
 })
 
