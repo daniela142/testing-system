@@ -18,6 +18,11 @@ const QuestionSchema = new mongoose.Schema({
         enum: ["MultipleChoice", "ShortAnswer", "CheckBoxes"]
     },
 
+    options: {
+        type: Array,
+        required: false,
+    },
+
     answers: {
         type: Array,
         required: [true, "Please provide a question answer"],

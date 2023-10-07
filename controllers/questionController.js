@@ -43,17 +43,17 @@ const getQuestions = asyncHandler(async (req, res) => {
 // @desc Delete question
 // @route DELETE /api/questions/:id
 // access Private/Admin
-const deleteQuestion = asyncHandler(async (req, res) => {
-    const question = await Question.findById(req.params.questionId);
+// const deleteQuestion = asyncHandler(async (req, res) => {
+//     const question = await Question.findById(req.params.questionId);
 
-    if (question) {
-        await Question.deleteOne({ _id: question._id });
-        res.json({ message: 'Question removed' });
-    } else {
-        res.status(404);
-        throw new Error('Question not found');
-    }
-});
+//     if (question) {
+//         await Question.deleteOne({ _id: question._id });
+//         res.json({ message: 'Question removed' });
+//     } else {
+//         res.status(404);
+//         throw new Error('Question not found');
+//     }
+// });
 
 // @desc Get question by ID
 // @route GET /api/questions/:id
@@ -72,6 +72,5 @@ const getQuestionById = asyncHandler(async (req, res) => {
 module.exports = {
     createQuestion,
     getQuestions,
-    deleteQuestion,
     getQuestionById,
 }
