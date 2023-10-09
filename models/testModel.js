@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const bcrypt = require('bcryptjs');
 
 const TestSchema = new mongoose.Schema({
     name: {
@@ -11,24 +10,12 @@ const TestSchema = new mongoose.Schema({
         type: String,
         required: false,
     },
-    
-    numQuestions: {
-        type: Number,
-        required: true,
-    },
 
-    startDate: {
-        type: Date,
-        required: true,
-    },
-
-    endDate: {
-        type: Date,
-        required: true,
-    },
-
-    question_ids: {
-        type: Array,
+    questions: {
+        type: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Questions"
+        }],
         required: true,
     },
 })
