@@ -57,9 +57,11 @@ const updateTempElo = (userRating, questionRating, answeredCorrect) => {
 const updateRealElo = (userRating, totalChange, totalQuestionsAnswered, untestedPeriods) => {
     var volatility = getVolatility(untestedPeriods);
     userRating = getActualChange(userRating, totalChange, totalQuestionsAnswered) * volatility;
+    return userRating;
 }
 
-const getExpectedChange = (totalQuestionsAnswered, userRating) => {
+// Returns expected amount of elo rating lost or gained over the course of an entire test
+const getExpectedChange = (totalQuestionsAnswered, questionRatings, userRating) => {
     var expectedOutcome = 0;
     for (i = 0; i < totalQuestionsAnswered; i++) {
         expectedOutcome += 1 / (1 + Math.pow(10, (questionRatings[i] - userRating) / 400));
