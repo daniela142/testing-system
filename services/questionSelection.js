@@ -83,7 +83,7 @@ const selectQuestion = (questionRating) => {
             newQuestion = diamondOnePool[Math.floor(Math.random() * diamondOnePool.length)];
             break;
         case 900:
-            newQuestion = diamondTwoPool[Math.floor(Math.random() * diamondTwoPoolPool.length)];
+            newQuestion = diamondTwoPool[Math.floor(Math.random() * diamondTwoPool.length)];
             break;
     }
     return newQuestion;
