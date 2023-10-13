@@ -89,4 +89,8 @@ const selectQuestion = (questionRating) => {
     return newQuestion;
 }
 
-module.exports = { selectQuestionRating, selectQuestion}
+const questionSelector = (userRating) => {
+    return selectQuestion(selectQuestionRating(userRating));
+}
+
+module.exports = { questionSelector  }

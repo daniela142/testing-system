@@ -9,6 +9,8 @@ const {
     deleteUser,
     getUserById,
     updateUser,
+    updateEloRating,
+    generateUserQuestion,
 } = require('../controllers/userController');
 const { protect, admin } = require('../middleware/authMiddleware');
 
@@ -28,6 +30,14 @@ router
     .delete(protect, admin, deleteUser)
     .get(protect, getUserById)
     .put(protect, updateUser);
+
+router
+    .route('/elo')
+    .put(protect, updateEloRating)
+
+router
+    .route('/question')
+    .get(protect, generateUserQuestion)
 
 
 module.exports = router;
