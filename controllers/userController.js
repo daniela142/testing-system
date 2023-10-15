@@ -217,7 +217,7 @@ const updateEloRating = asyncHandler(async (req, res) => {
     const answeredCorrect = req.body.answeredCorrect;
 
     if (user && question && (answeredCorrect != null)) {
-        let updatedElo = eloCalculator.updateElo(user.elo, question.elo, answeredCorrect);
+        let updatedElo = eloCalculator.updateTempElo(user.elo, question.elo, answeredCorrect);
 
         res.json({
             elo: updatedElo
