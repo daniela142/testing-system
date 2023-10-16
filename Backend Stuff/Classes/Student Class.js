@@ -8,6 +8,11 @@ class Student {
         this.firstName = firstName;
         this.lastName = lastName;
         this.elo = startingElo;
+        this.studentElo = startingElo;
+
+        this.lastDate = new Date();
+        this.currentDate = new Date();
+        this.timeSinceLogin = [];
     }
 
     updateElo() {
@@ -28,6 +33,14 @@ class Student {
     }
     getElo() {
         return this.elo;
+    }
+    getTimeSinceLogin(){   
+        years = this.currentDate.getFullYear - this.lastDate.getFullYear
+        months = this.currentDate.getMonth - this.lastDate.getMonth
+        days = this.currentDate.getDay - this.lastDate.getDay
+
+        this.timeSinceLogin = [years, months, days];
+        return this.timeSinceLogin;
     }
 }
 
