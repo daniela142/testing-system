@@ -12,7 +12,7 @@ class Student {
 
         this.lastDate = new Date();
         this.currentDate = new Date();
-        this.timeSinceLogin = [];
+        this.timeSinceLogin = 0;
     }
 
     updateElo() {
@@ -35,11 +35,26 @@ class Student {
         return this.studentElo;
     }
     getTimeSinceLogin(){   
-        years = this.currentDate.getFullYear - this.lastDate.getFullYear
-        months = this.currentDate.getMonth - this.lastDate.getMonth
-        days = this.currentDate.getDay - this.lastDate.getDay
+        months = this.currentDate.getMonth - this.lastDate.getMonth;
+        days = this.currentDate.getDay - this.lastDate.getDay;
+        var time = 0;
+        var monthdays = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        if(days < 0){
+            time += monthdays[this.lastDate.getMonth] - this.lastDate.getDay;
+            for(i = this.lastDate.getMonth + 1; i != this.currentDate.getMonth; i++){
+                if(i > 12){
+                    i = 1;
+                }
+                if(i = this.currentDate.getMonth){
+                    time += this.currentDate.getDay
+                }
+                else{
+                    time += monthdays[i]
+                }
+            }
+        }
 
-        this.timeSinceLogin = [years, months, days];
+        this.timeSinceLogin = time/7;
         return this.timeSinceLogin;
     }
 }
