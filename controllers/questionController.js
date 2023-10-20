@@ -1,5 +1,8 @@
 const asyncHandler = require('../middleware/asyncHandler');
 const Question = require('../models/questionModel');
+const Test = require("../models/testModel");
+
+const questionSelection = require('../services/questionSelection');
 
 // @desc Create a new question
 // @route POST /api/questions
@@ -69,8 +72,29 @@ const getQuestionById = asyncHandler(async (req, res) => {
     }
 });
 
+// @desc    select user question
+// @route   GET /api/questions/generate
+// @access  Private
+const generateQuestion = asyncHandler(async (req, res) => {
+    // let updatedQuestion = questionSelection.questionSelector(req.params.elo);
+    
+    const {testId} = req.body;
+    const test = await Test.findById(testId).populate('questions');
+
+    const questions = test['questions']
+
+    const questionPool = questions.filter((question) => question.elo <= req.params.elo && question.elo >= req.params.elo - 100)
+    
+    const selectedQuestion = questionPool[Math.floor(Math.random() * questionPool.length)];
+
+    res.json({
+        selectedQuestion
+    })
+})
+
 module.exports = {
     createQuestion,
     getQuestions,
     getQuestionById,
+    generateQuestion
 }

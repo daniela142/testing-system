@@ -52,7 +52,7 @@ const selectQuestionRating = (userRating) => {
     }
 }
 
-const selectQuestion = (questionRating) => {
+const selectQuestion = (questionRating, questionArr) => {
     let newQuestion;
     switch (questionRating) {
         case 0:
@@ -86,11 +86,12 @@ const selectQuestion = (questionRating) => {
             newQuestion = diamondTwoPool[Math.floor(Math.random() * diamondTwoPool.length)];
             break;
     }
+    
     return newQuestion;
 }
 
-const questionSelector = (userRating) => {
-    return selectQuestion(selectQuestionRating(userRating));
+const questionSelector = (userRating, questionArr) => {
+    return selectQuestion(selectQuestionRating(userRating), questionArr);
 }
 
-module.exports = { questionSelector  }
+module.exports = { questionSelector }

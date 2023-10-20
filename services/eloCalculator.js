@@ -43,6 +43,7 @@ const calculateExpected = (userRating, questionRating) => {
 const updateTempElo = (userRating, questionRating, answeredCorrect) => {
     var expectedOutcome = calculateExpected(userRating, questionRating);
     userRating = Math.round(userRating + kFactor * (answeredCorrect - expectedOutcome));
+    return userRating;
 }
 
 // ===============================================================================================

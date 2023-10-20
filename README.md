@@ -84,24 +84,24 @@ Body: {
     "description": "very hard",
     "questions": [
         {
-            "name": "test 1",
+            "name": "question 1",
             "type": "MultipleChoice",
             "options": ["123", "abc", "xyz"], // -> can be null
             "answers": ["test"],
-            "elo": 123
+            "elo": 200
         },
         {
-            "name": "test 2",
+            "name": "question 2",
             "type": "ShortAnswer",
             "answers": ["test"],
-            "elo": 123
+            "elo": 400
         },
         {
-            "name": "test 3",
+            "name": "question 3",
             "type": "CheckBoxes",
             "options": ["123", "abc", "xyz"], // -> can be null
             "answers": ["test"],
-            "elo": 123
+            "elo": 1000
         }
     ]
 }

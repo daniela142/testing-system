@@ -3,7 +3,6 @@ const generateToken = require('../utils/generateToken');
 const User = require('../models/userModel');
 
 const eloCalculator = require('../services/eloCalculator');
-const questionSelection = require('../services/questionSelection');
 
 // @desc Auth user & get token
 // @route POST /api/users/auth
@@ -182,12 +181,17 @@ const updateUser = asyncHandler(async (req, res) => {
         user.firstname = req.body.firstname || user.firstname;
         user.lastname = req.body.lastname || user.lastname;
         user.email = req.body.email || user.email;
-        user.elo = req.body.elo || user.elo;
+        // user.elo = req.body.elo || user.elo;
         user.usertype = req.body.usertype || user.usertype;
 
 
         if (req.body.password) {
             user.password = req.body.password;
+        }
+
+        if (req.body.elo && req.body.questionElo && req.body.answeredCorrect) {
+            let userElo = eloCalculator.updateTempElo(req.body.elo, req.body.questionElo, req.body.answeredCorrect)
+            user.elo = userElo || user.elo;
         }
 
         const updatedUser = await user.save();
@@ -206,46 +210,6 @@ const updateUser = asyncHandler(async (req, res) => {
     }
 });
 
-//------------------- THE FOLLOWING FUNCTIONS ARE BROKEN FOR NOW
-
-// @desc    Update user elo rating
-// @route   PUT /api/users/elo
-// @access  Private
-const updateEloRating = asyncHandler(async (req, res) => {
-    const user = await User.findById(req.params.id);
-    const question = req.body.question;
-    const answeredCorrect = req.body.answeredCorrect;
-
-    if (user && question && (answeredCorrect != null)) {
-        let updatedElo = eloCalculator.updateTempElo(user.elo, question.elo, answeredCorrect);
-
-        res.json({
-            elo: updatedElo
-        })
-    } else {
-        res.status(404);
-        throw new Error('User not found');
-    }
-});
-
-// @desc    select user question
-// @route   GET /api/users/question
-// @access  Private
-const generateUserQuestion = asyncHandler(async (req, res) => {
-    const user = await User.findById(req.params.id);
-
-    if (user) {
-        let updatedQuestion = questionSelection.questionSelector(user.elo);
-
-        res.json({
-            question: updatedQuestion
-        })
-    } else {
-        res.status(404);
-        throw new Error('Question not found');
-    }
-})
-
 
 module.exports = {
     authUser,
@@ -257,6 +221,4 @@ module.exports = {
     deleteUser,
     getUserById,
     updateUser,
-    updateEloRating,
-    generateUserQuestion,
 }
