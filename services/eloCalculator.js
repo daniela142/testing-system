@@ -7,6 +7,8 @@ const kFactor = 32; // Integer influencing rating gained or lost per question an
 const maxVolatility = 2; // Maximum possible value for volatility - Default for new users
 const maxPeriods = 5; // Maximum amount of time periods
 
+const maxChange = 50;
+
 // #region TempRating
 // ===============================================================================================
 
@@ -57,7 +59,24 @@ const updateTempElo = (userRating, questionRating, answeredCorrect) => {
 // answeredCorrect is a boolean - true if question was answered correctly
 const updateRealElo = (userRating, totalChange, totalQuestionsAnswered, untestedPeriods) => {
     var volatility = getVolatility(untestedPeriods);
+    userRatingBefore = userRating;
     userRating = getActualChange(userRating, totalChange, totalQuestionsAnswered) * volatility;
+    userRatingAfter = userRating;
+
+    if (userRatingAfter - userRatingBefore > maxChange) {
+        userRating += maxChange;
+    }
+    else if (userRatingAfter - userRatingBefore < -maxChange) {
+        userRating -= maxChange;
+    }
+
+    if (userRating > 1000) {
+        userRating = 1000;
+    }
+    else if (userRating < 0) {
+        userRating = 0;
+    }
+    
     return userRating;
 }
 
