@@ -89,7 +89,7 @@ const getExpectedChange = (totalQuestionsAnswered, questionRatings, userRating) 
     return expectedOutcome;
 }
 
-// totalChange is the cumulative sum of the change in elo for all questions answered
+// totalChange is the cumulative sum of the change in elo for all questions answered, tempSum
 // expectedChange is the sum of the expected outcomes comparing the user's real rating to the question difficulty
 const getActualChange = (userRating, totalChange, totalQuestionsAnswered) => {
     var expectedChange = getExpectedChange(totalQuestionsAnswered, userRating);
