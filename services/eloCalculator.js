@@ -63,11 +63,19 @@ const updateRealElo = (userRating, totalChange, totalQuestionsAnswered, untested
     userRatingAfter = userRating;
 
     if (userRatingAfter - userRatingBefore > maxChange) {
-        return userRatingBefore + maxChange;
+        userRating += maxChange;
     }
     else if (userRatingAfter - userRatingBefore < -maxChange) {
-        return userRatingBefore - maxChange;
+        userRating -= maxChange;
     }
+
+    if (userRating > 1000) {
+        userRating = 1000;
+    }
+    else if (userRating < 0) {
+        userRating = 0;
+    }
+    
     return userRating;
 }
 
