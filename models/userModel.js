@@ -32,6 +32,18 @@ const UserSchema = new mongoose.Schema({
         min: 0,
         max: 1000,
     },
+
+    tempElo: {
+        type: Number,
+        default: 500,
+        min: 0,
+        max: 1000,
+    },
+
+    untestedPeriod: {
+        type: Number,
+        default: 0,
+    },
     
     usertype: {
         type: String,

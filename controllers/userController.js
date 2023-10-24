@@ -20,6 +20,9 @@ const authUser = asyncHandler(async (req, res) => {
             firstname: user.firstname,
             lastname: user.lastname,
             email: user.email,
+            elo: user.elo,
+            tempElo: user.tempElo,
+            untestedPeriod: user.untestedPeriod,
             usertype: user.usertype
         })
     } else {
@@ -33,7 +36,7 @@ const authUser = asyncHandler(async (req, res) => {
 // @route POST /api/users
 // @access Public
 const registerUser = asyncHandler(async (req, res) => {
-    const { firstname, lastname, email, password, usertype } = req.body;
+    const { firstname, lastname, email, password, elo, tempElo, untestedPeriod, usertype } = req.body;
 
     const userExists = await User.findOne({ email });
 
@@ -47,7 +50,10 @@ const registerUser = asyncHandler(async (req, res) => {
         lastname,
         email,
         password,
-        usertype
+        elo,
+        tempElo,
+        untestedPeriod,
+        usertype,
     });
 
     user.save();
@@ -60,7 +66,10 @@ const registerUser = asyncHandler(async (req, res) => {
             firstname: user.firstname,
             lastname: user.lastname,
             email: user.email,
-            usertype: user.usertype
+            elo: user.elo,
+            tempElo: user.tempElo,
+            untestedPeriod: user.untestedPeriod,
+            usertype: user.usertype,
         });
     } else {
         res.status(400);
@@ -93,7 +102,10 @@ const getUserProfile = asyncHandler(async (req, res) => {
             firstname: user.firstname,
             lastname: user.lastname,
             email: user.email,
-            usertype: user.usertype
+            elo: user.elo,
+            tempElo: user.tempElo,
+            untestedPeriod: user.untestedPeriod,
+            usertype: user.usertype,
         });
     } else {
         res.status(404);
@@ -101,21 +113,32 @@ const getUserProfile = asyncHandler(async (req, res) => {
     }
 });
 
-// @desc Update user profile
-// @route PUT /api/users/profile
-// @access Private
-const updateUserProfile = asyncHandler(async (req, res) => {
-    const user = await User.findById(req.user._id);
+// @desc    Update user
+// @route   PUT /api/users/:id
+// @access  Private
+const updateUser = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);
 
     if (user) {
         user.firstname = req.body.firstname || user.firstname;
         user.lastname = req.body.lastname || user.lastname;
         user.email = req.body.email || user.email;
-        user.elo = req.body.elo || user.elo;
+        user.untestedPeriod = req.body.untestedPeriod || user.untestedPeriod;
         user.usertype = req.body.usertype || user.usertype;
+
 
         if (req.body.password) {
             user.password = req.body.password;
+        }
+
+        if (req.body.elo && req.body.questionElo && req.body.answeredCorrect) {
+            let userElo = eloCalculator.updateTempElo(req.body.elo, req.body.questionElo, req.body.answeredCorrect)
+            user.elo = userElo || user.elo;
+        }
+
+        if (req.body.tempElo && req.body.questionElo && req.body.answeredCorrect) {
+            let userElo = eloCalculator.updateTempElo(req.body.tempElo, req.body.questionElo, req.body.answeredCorrect)
+            user.tempElo = userElo || user.tempElo;
         }
 
         const updatedUser = await user.save();
@@ -126,7 +149,9 @@ const updateUserProfile = asyncHandler(async (req, res) => {
             lastname: updatedUser.lastname,
             email: updatedUser.email,
             elo: updatedUser.elo,
-            usertype: updatedUser.usertype
+            tempElo: updatedUser.tempElo,
+            usertype: updatedUser.usertype,
+            untestedPeriod: updatedUser.untestedPeriod,
         });
     } else {
         res.status(404);
@@ -171,52 +196,11 @@ const getUserById = asyncHandler(async (req, res) => {
     }
 });
 
-// @desc    Update user
-// @route   PUT /api/users/:id
-// @access  Private
-const updateUser = asyncHandler(async (req, res) => {
-    const user = await User.findById(req.params.id);
-
-    if (user) {
-        user.firstname = req.body.firstname || user.firstname;
-        user.lastname = req.body.lastname || user.lastname;
-        user.email = req.body.email || user.email;
-        // user.elo = req.body.elo || user.elo;
-        user.usertype = req.body.usertype || user.usertype;
-
-
-        if (req.body.password) {
-            user.password = req.body.password;
-        }
-
-        if (req.body.elo && req.body.questionElo && req.body.answeredCorrect) {
-            let userElo = eloCalculator.updateTempElo(req.body.elo, req.body.questionElo, req.body.answeredCorrect)
-            user.elo = userElo || user.elo;
-        }
-
-        const updatedUser = await user.save();
-
-        res.json({
-            _id: updatedUser._id,
-            firstname: updatedUser.firstname,
-            lastname: updatedUser.lastname,
-            email: updatedUser.email,
-            elo: updatedUser.elo,
-            user: updateUser.usertype
-        });
-    } else {
-        res.status(404);
-        throw new Error('User not found');
-    }
-});
-
-
 module.exports = {
     authUser,
     registerUser,
     logoutUser,
     getUserProfile,
-    updateUserProfile,
     getUsers,
     deleteUser,
     getUserById,
