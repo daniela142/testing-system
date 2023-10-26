@@ -50,6 +50,11 @@ const UserSchema = new mongoose.Schema({
         default: "student",
         required: [true, "Please choose an account type!"],
         enum: ["student", "teacher", "admin"]
+    },
+    classroom_ids: {
+        type: Array,
+        required: true,
+        default: ['6503e6bfb97973659ac6160d', '6503e7a7b97973659ac61615'],
     }
 })
 

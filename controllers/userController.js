@@ -23,7 +23,8 @@ const authUser = asyncHandler(async (req, res) => {
             elo: user.elo,
             tempElo: user.tempElo,
             untestedPeriod: user.untestedPeriod,
-            usertype: user.usertype
+            usertype: user.usertype,
+            classroom_ids: iser.classroom_ids,
         })
     } else {
         res.status(401);
@@ -36,7 +37,7 @@ const authUser = asyncHandler(async (req, res) => {
 // @route POST /api/users
 // @access Public
 const registerUser = asyncHandler(async (req, res) => {
-    const { firstname, lastname, email, password, elo, tempElo, untestedPeriod, usertype } = req.body;
+    const { firstname, lastname, email, password, elo, tempElo, untestedPeriod, usertype, classroom_ids } = req.body;
 
     const userExists = await User.findOne({ email });
 
@@ -54,6 +55,7 @@ const registerUser = asyncHandler(async (req, res) => {
         tempElo,
         untestedPeriod,
         usertype,
+        classroom_ids,
     });
 
     user.save();
@@ -70,6 +72,7 @@ const registerUser = asyncHandler(async (req, res) => {
             tempElo: user.tempElo,
             untestedPeriod: user.untestedPeriod,
             usertype: user.usertype,
+            classroom_ids: user.classroom_ids,
         });
     } else {
         res.status(400);
@@ -106,6 +109,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
             tempElo: user.tempElo,
             untestedPeriod: user.untestedPeriod,
             usertype: user.usertype,
+            classroom_ids: user.classroom_ids,
         });
     } else {
         res.status(404);
@@ -125,6 +129,7 @@ const updateUser = asyncHandler(async (req, res) => {
         user.email = req.body.email || user.email;
         user.untestedPeriod = req.body.untestedPeriod || user.untestedPeriod;
         user.usertype = req.body.usertype || user.usertype;
+        user.classroom_ids = req.body.classroom_ids || user.classroom_ids;
 
 
         if (req.body.password) {
@@ -152,6 +157,7 @@ const updateUser = asyncHandler(async (req, res) => {
             tempElo: updatedUser.tempElo,
             usertype: updatedUser.usertype,
             untestedPeriod: updatedUser.untestedPeriod,
+            classroom_ids: updatedUser.classroom_ids,
         });
     } else {
         res.status(404);
