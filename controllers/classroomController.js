@@ -47,8 +47,9 @@ const createClassroom = asyncHandler(async (req, res) => {
 // @access Private
 const getClassroom = asyncHandler(async (req, res) => {
     //const classroom = await Classroom.find({});
-    const classroom = await Classroom.findById(req.user._id);
-    
+    console.log("id is " + req.params._id);
+    const classroom = await Classroom.findById(req.params._id);
+
     if (classroom) {
         res.send(classroom);
     } else {
@@ -85,7 +86,6 @@ const deleteClassroom = asyncHandler(async (req, res) => {
 // @access Private/Admin
 const getClassroomById = asyncHandler(async (req, res) => {
     const classroom = await Classroom.findById(req.params.classroomId);
-
     if (classroom) {
         res.json(classroom);
     } else {
