@@ -24,7 +24,7 @@ const authUser = asyncHandler(async (req, res) => {
             tempElo: user.tempElo,
             untestedPeriod: user.untestedPeriod,
             usertype: user.usertype,
-            classroom_ids: iser.classroom_ids,
+            classroom_ids: user.classroom_ids,
         })
     } else {
         res.status(401);
