@@ -1,6 +1,7 @@
 const asyncHandler = require("../middleware/asyncHandler");
 const Test = require("../models/testModel");
 const Question = require("../models/questionModel");
+const mongoose = require('mongoose');
 
 // @desc Create a new test or quizs
 // @route POST /api/tests
@@ -9,19 +10,19 @@ const createTest = asyncHandler(async (req, res) => {
   const { name, description, questions, datetime, time_limit } = req.body;
   let questionArray;
 
-  if (!questions || typeof questions === "array") {
+  if (!questions || !Array.isArray(questions)) {
     res.status(400);
-    throw new Error("Provide array of questions");
-  } else {
-    questionArray = await Question.insertMany(questions);
+    throw new Error("Provide an array of question IDs");
   }
 
-  const questionIds = questionArray.map((question) => question._id);
+  const questionIds = questions.map((questionId) => new mongoose.Types.ObjectId(questionId));
+
+  questionArray = await Question.find({ _id: { $in: questionIds } });
 
   const test = await Test.create({
     name,
     description,
-    questions: questionIds,
+    questions: questionArray.map((question) => question._id),
     datetime,
     time_limit,
   });

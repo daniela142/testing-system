@@ -16,7 +16,6 @@ router.route('/').post(createClassroom).get(protect, teacher, getClassrooms);
 router
     .route('/info')
     .get(getClassroom)
-    .put(updateClassroom);
 
 router
     .route('/:classroomId')

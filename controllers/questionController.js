@@ -8,12 +8,13 @@ const questionSelection = require('../services/questionSelection');
 // @route POST /api/questions
 // @access Public
 const createQuestion = asyncHandler(async (req, res) => {
-    const { name, imageUrl, type, answers, elo } = req.body;
+    const { name, imageUrl, type, answers, elo, options } = req.body;
 
     const question = await Question.create({
         name,
         imageUrl,
         type,
+        options,
         answers,
         elo
     });
@@ -26,6 +27,7 @@ const createQuestion = asyncHandler(async (req, res) => {
             name: question.name,
             imageUrl: question.imageUrl,
             type: question.type,
+            options: question.options,
             answers: question.answers,
             elo: question.elo,
         });

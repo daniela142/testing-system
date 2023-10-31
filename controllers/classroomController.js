@@ -106,7 +106,10 @@ const updateClassroom = asyncHandler(async (req, res) => {
         classroom.description = req.body.description || classroom.description;
         classroom.coordinator = req.body.coordinator || classroom.coordinator;
         classroom.student_ids = req.body.student_ids || classroom.student_ids;
-        classroom.test_ids = req.body.test_ids || classroom.test_ids;
+        
+        if (req.body.test_ids && Array.isArray(req.body.test_ids)) {
+            classroom.test_ids = [...classroom.test_ids, ...req.body.test_ids];
+        }
 
         const updatedClassroom = await classroom.save();
 
