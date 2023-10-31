@@ -11,6 +11,18 @@ const TestSchema = new mongoose.Schema({
         required: false,
     },
 
+    datetime: {
+        type: Date,
+        required: true,
+        default: Date.now,
+    },
+
+    time_limit: {
+        type: Number,
+        required: true,
+        default: 60,
+    },
+
     questions: {
         type: [{
             type: mongoose.Schema.Types.ObjectId,

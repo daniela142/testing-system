@@ -6,7 +6,7 @@ const Question = require("../models/questionModel");
 // @route POST /api/tests
 // @access Public
 const createTest = asyncHandler(async (req, res) => {
-  const { name, description, questions } = req.body;
+  const { name, description, questions, datetime, time_limit } = req.body;
   let questionArray;
 
   if (!questions || typeof questions === "array") {
@@ -22,6 +22,8 @@ const createTest = asyncHandler(async (req, res) => {
     name,
     description,
     questions: questionIds,
+    datetime,
+    time_limit,
   });
 
   test.save();
@@ -31,11 +33,43 @@ const createTest = asyncHandler(async (req, res) => {
       _id: test._id,
       name: test.name,
       description: test.description,
-      questions: questionArray
+      questions: questionArray,
+      datetime: test.datetime,
+      time_limit: test.time_limit,
     });
   } else {
     res.status(400);
     throw new Error("Invalid test data");
+  }
+});
+
+// @desc    Update classroom
+// @route   PUT /api/tests/:id
+// @access  Private
+const updateTest = asyncHandler(async (req, res) => {
+  const test = await Test.findById(req.params.testId);
+
+  if (test) {
+    test.name = req.body.name || test.name;
+    test.description = req.body.description || test.description;
+    test.questions = req.body.questions || test.questions;
+    // test.datetime = req.body.datetime || test.datetime;
+    test.datetime = new Date();
+    test.time_limit = req.body.time_limit || test.time_limit;
+
+    const updatedTest = await test.save();
+
+    res.json({
+      _id: updatedTest._id,
+      name: updatedTest.name,
+      description: updatedTest.description,
+      questions: updatedTest.questions,
+      datetime: updatedTest.datetime,
+      time_limit: updatedTest.time_limit,
+    });
+  } else {
+    res.status(404);
+    throw new Error('Test not found');
   }
 });
 
@@ -79,5 +113,6 @@ const getTestById = asyncHandler(async (req, res) => {
 module.exports = {
   createTest,
   getTests,
+  updateTest,
   getTestById,
 };
